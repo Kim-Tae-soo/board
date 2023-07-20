@@ -83,9 +83,6 @@
         <label for="title">제목:</label>
         <input type="text" name="title" id="title" />
 
-        <label for="writer">작성자:</label>
-        <input type="text" name="writer" id="writer" />
-
         <label for="content">내용:</label>
         <textarea name="content" id="content" rows="5" cols="50"></textarea>
 
