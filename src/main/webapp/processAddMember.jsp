@@ -5,7 +5,7 @@
 <%
 	request.setCharacterEncoding("utf-8");
 
-	String id = request.getParameter("id");
+	String id = request.getParameter("userId");
 	String password = request.getParameter("password");
 	String name = request.getParameter("name");
 	String gender = request.getParameter("gender");

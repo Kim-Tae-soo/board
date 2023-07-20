@@ -5,50 +5,12 @@
 <%@page import="java.sql.DriverManager"%>
 <html>
 <head>
-<title>게시판</title>
 
-<!-- CSS STYLE -->
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
-	integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
-	crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
 </head>
 <body>
-
-	<%
-	/* 로그인시 저장했던 sessionId 가져오기 로그인 안한 상태면 sessionId==null */
-	String sessionId = (String) session.getAttribute("sessionId");
-	%>
-	<nav class="navbar navbar-expand navbar-dark bg-dark">
-		<div class="container">
-
-			<div>
-				<div class="navbar-nav mr-auto">
-					<c:choose>
-						<c:when test="${empty sessionId }">
-							${sessionId==null}
-							<li class="nav-item"><a class="nav-link"
-								href="<c:url value='login.jsp'/>">로그인</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="<c:url value='addMember.jsp'/>">회원가입</a></li>
-						</c:when>
-						<c:otherwise>
-							<li style="padding-top: 7px; color: white;">[<%=sessionId%>님]
-							</li>
-							<li class="nav-item"><a class="nav-link"
-								href="<c:url value='logout.jsp'/>">로그아웃</a></li>
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
-		</div>
-	</nav>
-
+	<jsp:include page="nav.jsp"/>
 <!-- 검색창 -->
 	<div class="container mt-5">
 		<form class="search-form" method="get" action="index.jsp">
@@ -144,11 +106,17 @@
 		</div>
     <div class="d-flex justify-content-end">
         <button type="button" class="btn btn-secondary" onclick="checkLogin()">글 작성</button>
+        
     </div>
 	</div>
+		<%
+	/* 로그인시 저장했던 sessionId 가져오기 로그인 안한 상태면 sessionId==null */
+	String sessionId = (String) session.getAttribute("sessionId");
+	%>
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 
-<script src="js/bootstrap.js"></script>
 
 <script type="text/javascript">
 function checkLogin() {	
