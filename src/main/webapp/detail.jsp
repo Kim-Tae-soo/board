@@ -3,9 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.sql.*, java.io.*"%>
 <%@ page import="javax.servlet.http.HttpSession" %>
+
 <html>
 <head>
+<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 <title>게시글 상세 내용</title>
+<!-- 
 <style>
 body {
     font-family: Arial, sans-serif;
@@ -53,9 +56,13 @@ tr:hover {
     margin-top: 10px;
 }
 </style>
+
+ -->
+
+
 </head>
 <body>
-    <h1>게시글 상세 내용</h1>
+ 
     <%!
         // 서버 측에 로그인 상태를 확인하기 위한 메서드
         private boolean isUserLoggedIn(HttpSession session) {
@@ -63,6 +70,8 @@ tr:hover {
             return session.getAttribute("sessionId") != null;
         }
     %>
+    <jsp:include page="nav.jsp"/>
+    <h1>게시글 상세 내용</h1>
     <%
     String dbDriver = "com.mysql.jdbc.Driver";
     String jdbcUrl = "jdbc:mysql://192.168.50.52:3306/board";
@@ -104,24 +113,10 @@ tr:hover {
             String fileName = rs.getString("file_name");
             String filePath = rs.getString("file_path");
             
-         // 로그인한 사용자의 이름 가져오기
-            String sessionId = (String) session.getAttribute("sessionId");
-            String memberName = null;
-            // 데이터베이스에서 member 테이블을 조회하여 회원의 이름 가져오기
-            String sqlMember = "SELECT name FROM member WHERE id = ?";
-            PreparedStatement pstmtMember = conn.prepareStatement(sqlMember);
-            pstmtMember.setString(1, sessionId);
-            ResultSet rsMember = pstmtMember.executeQuery();
-            if (rsMember.next()) {
-                memberName = rsMember.getString("name");
-            }
-            rsMember.close();
-            pstmtMember.close();
-            
-         	// 수정과 삭제 버튼 표시 여부를 결정하는 변수
-            boolean showEditButtons = isUserLoggedIn && writer.equals(memberName);
+            //로그인 시 버튼 표시 
+            boolean showEditButtons = isUserLoggedIn;
     %>
-    <table>
+    <table class="table table-bordered">
     	<tr>
     		<th>제목 </th>
         	<td><%= title %></td>
@@ -157,16 +152,17 @@ tr:hover {
         <% if (showEditButtons) { %>
             <form method="post" action="delete.jsp">
                 <input type="hidden" name="bno" value="<%=bno%>">
-                <input type="submit" value="삭제">
+                <button type="submit" value="삭제" class="btn btn-danger">삭제</button>
             </form>
             <form method="post" action="modify.jsp">
                 <input type="hidden" name="bno" value="<%=bno%>">
-                <input type="submit" value="수정">
+                <input type="submit" value="수정" class="btn btn-secondary" >
             </form>
         <% } %>
         <!-- 목록 버튼 -->
         <form method="post" action="index.jsp">
-            <input type="submit" value="목록">
+            <button type="submit" value="목록" class="btn btn-primary">목록</button>
+            
         </form>
     </div>
 
@@ -188,5 +184,9 @@ tr:hover {
     }
     }
     %>
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -5,17 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+ <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<jsp:include page="menu.jsp"/>
+<jsp:include page="nav.jsp"/>
 <div class="jumbotron">
-	<div class="container">
-		<h1 class="display-3">로그인</h1>
+	<div style="text-align :center;" class="container">
+		<h1 >로그인</h1>
 	</div>
 </div>
 <div class="container" align="center">
-	<div class="col-md-4 col-me-offset-4">
+	<div>
 		<h3 class="form-signin-heading">Please sign in</h3>
 		<%
 			String error = request.getParameter("error");
@@ -25,6 +25,7 @@
 				out.print("</div>");
 			}
 		%>
+		<div class="jumbotron" style="padding-top: 20px;">
 		<form class="form-signin" action="processLoginMember.jsp" method="post">
 			<div class="form-group">
 				<label class="sr-only">User Name</label>
@@ -34,10 +35,16 @@
 				<label class="sr-only">Password</label>
 				<input type="password" name="password" class="form-control" placeholder="Password" required>
 			</div>
-			<button class="btn btn-lg btn-success btn-block" type="submit">로그인</button>
-			<button class="btn btn-lg btn-secondary btn-block" type="button" onclick="location.href='addMember.jsp'">회원가입</button>
+			<button class="btn btn-primary" type="submit">로그인</button>
+			<button class="btn btn-info" type="button" onclick="location.href='addMember.jsp'">회원가입</button>
 		</form>
 	</div>
 </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 </body>
 </html>

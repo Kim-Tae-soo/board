@@ -44,14 +44,16 @@
         // 게시글 번호와 수정할 내용을 파라미터로 전달받음
         int bno = Integer.parseInt(request.getParameter("bno"));
         String title = request.getParameter("title");
+        String writer = request.getParameter("writer");
         String content = request.getParameter("content");
 
         // 해당 게시글 업데이트
-        String updateSql = "UPDATE board SET title = ?, content = ? WHERE bno = ?";
+        String updateSql = "UPDATE board SET title = ?, writer = ?, content = ? WHERE bno = ?";
         pstmt = conn.prepareStatement(updateSql);
         pstmt.setString(1, title);
-        pstmt.setString(2, content);
-        pstmt.setInt(3, bno);
+        pstmt.setString(2, writer);
+        pstmt.setString(3, content);
+        pstmt.setInt(4, bno);
         pstmt.executeUpdate();
     } catch (Exception e) {
         e.printStackTrace();

@@ -5,31 +5,16 @@
 <%@page import="java.sql.DriverManager"%>
 <html>
 <head>
+ <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
 <title>게시판</title>
 <%
 	/* 로그인시 저장했던 sessionId 가져오기 로그인 안한 상태면 sessionId==null */
-	String sessionId = (String)session.getAttribute("sessionId");
+	
 %>
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-	<div class="container">
 
-		<div>
-		<div class="navbar-nav mr-auto">
-			<c:choose>
-				<c:when test="${empty sessionId }"> <%-- ${sessionId==null} --%>
-					<li class="nav-item"><a class="nav-link" href="<c:url value='login.jsp'/>">로그인</a></li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value='addMember.jsp'/>">회원가입</a></li>
-				</c:when>
-				<c:otherwise>
-					<li style="padding-top:7px; color:white;">[<%=sessionId %>님]</li>
-					<li class="nav-item"><a class="nav-link" href="<c:url value='logout.jsp'/>">로그아웃</a></li>
-				</c:otherwise>
-			</c:choose>
-		</div>
-		</div>
-	</div>
-</nav>
 <style>
+/*
 body {
 	font-family: Arial, sans-serif;
 	margin: 0;
@@ -96,10 +81,13 @@ th {
 .write-btn input[type="submit"]:hover {
 	
 }
+*/
 </style>
 </head>
 <body>
-	<h1><a href="index.jsp">게시판</a></h1>
+<jsp:include page="nav.jsp"/>
+
+
 	<table>
 		<tr>
 			<th>번호</th>
@@ -174,13 +162,17 @@ th {
 
 	<div class="write-btn">
 		<form method="post" action="write.jsp">
-			<input type="button" value="글 작성" onclick = "checkLogin()">
+			<input  class="btn btn-primary" type="button" value="글 작성" onclick = "checkLogin()">
 		</form>
 	</div>
-	<!-- 백업용 커밋 -->
+
 </body>
 
 <script type="text/javascript">
+<%
+/* 로그인시 저장했던 sessionId 가져오기 로그인 안한 상태면 sessionId==null */
+String sessionId = (String)session.getAttribute("sessionId");
+%>
 	
 function checkLogin() {	
 	
