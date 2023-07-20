@@ -113,8 +113,22 @@ tr:hover {
             String fileName = rs.getString("file_name");
             String filePath = rs.getString("file_path");
             
-            //로그인 시 버튼 표시 
-            boolean showEditButtons = isUserLoggedIn;
+         // 로그인한 사용자의 이름 가져오기
+            String sessionId = (String) session.getAttribute("sessionId");
+            String memberName = null;
+            // 데이터베이스에서 member 테이블을 조회하여 회원의 이름 가져오기
+            String sqlMember = "SELECT name FROM member WHERE id = ?";
+            PreparedStatement pstmtMember = conn.prepareStatement(sqlMember);
+            pstmtMember.setString(1, sessionId);
+            ResultSet rsMember = pstmtMember.executeQuery();
+            if (rsMember.next()) {
+                memberName = rsMember.getString("name");
+            }
+            rsMember.close();
+            pstmtMember.close();
+            
+         	// 수정과 삭제 버튼 표시 여부를 결정하는 변수
+            boolean showEditButtons = isUserLoggedIn && writer.equals(memberName);
     %>
     <table class="table table-bordered">
     	<tr>
