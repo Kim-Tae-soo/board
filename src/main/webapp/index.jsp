@@ -177,7 +177,7 @@ th {
 			<input type="button" value="글 작성" onclick = "checkLogin()">
 		</form>
 	</div>
-	
+	<!-- 백업용 커밋 -->
 </body>
 
 <script type="text/javascript">
@@ -194,4 +194,4 @@ function checkLogin() {
    	}
 }
 </script>
-</html>
+</html> 
