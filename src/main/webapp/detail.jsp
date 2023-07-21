@@ -18,7 +18,6 @@
 
 </head>
 <body>
-	<h1>게시글 상세 내용</h1>
 	<%!// 서버 측에 로그인 상태를 확인하기 위한 메서드
 	private boolean isUserLoggedIn(HttpSession session) {
 		// 로그인한 사용자의 정보가 세션에 저장되어 있는지 확인
@@ -59,16 +58,30 @@
 		if (rs.next()) {
 			String title = rs.getString("title");
 			String writer = rs.getString("writer");
-			String regDate = rs.getString("regDate");
+			Date regDate = rs.getDate("regDate");
 			int viewCnt = rs.getInt("viewCnt");
 			String content = rs.getString("content");
 			String fileName = rs.getString("file_name");
 			String filePath = rs.getString("file_path");
 
-			//로그인 시 버튼 표시
-			boolean showEditButtons = isUserLoggedIn;
+			// 로그인한 사용자의 이름 가져오기
+            String sessionId = (String) session.getAttribute("sessionId");
+            String memberName = null;
+            // 데이터베이스에서 member 테이블을 조회하여 회원의 이름 가져오기
+            String sqlMember = "SELECT name FROM member WHERE id = ?";
+            PreparedStatement pstmtMember = conn.prepareStatement(sqlMember);
+            pstmtMember.setString(1, sessionId);
+            ResultSet rsMember = pstmtMember.executeQuery();
+            if (rsMember.next()) {
+                memberName = rsMember.getString("name");
+            }
+            rsMember.close();
+            pstmtMember.close();
+            
+         	// 수정과 삭제 버튼 표시 여부를 결정하는 변수
+            boolean showEditButtons = isUserLoggedIn && writer.equals(memberName);
 	%>
-	<div class="container">
+	<div class="container" style= "padding-top: 20px">
 		<div class="row">
 			<table class="table table-striped"
 				style="text-align: center; border: 1px solid #dddddd">
