@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.sql.*"%>
-<%@page import="java.sql.DriverManager"%>
+<%@ page import="java.sql.DriverManager"%>
 <html>
 <head>
 
@@ -45,6 +44,14 @@
 
 					<%
 					String keyword = request.getParameter("keyword");
+					int currentPage = 1; // 기본적으로 첫 번째 페이지를 보여줌
+
+					if (request.getParameter("currentPage") != null) {
+						currentPage = Integer.parseInt(request.getParameter("currentPage"));
+					}
+
+					int pageSize = 10; // 한 페이지에 보여줄 게시글 개수
+					int startRow = (currentPage - 1) * pageSize; // 시작 게시글 번호
 
 					String dbDriver = "com.mysql.jdbc.Driver";
 					String jdbcUrl = "jdbc:mysql://192.168.50.52:3306/board";
@@ -60,12 +67,16 @@
 						conn = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword);
 
 						if (keyword == null) {
-							String sql = "SELECT bno, title, writer, regDate, viewCnt FROM board";
+							String sql = "SELECT bno, title, writer, regDate, viewCnt FROM board ORDER BY bno DESC LIMIT ?, ?";
 							pstmt = conn.prepareStatement(sql);
+							pstmt.setInt(1, startRow);
+							pstmt.setInt(2, pageSize);
 						} else {
-							String sql = "SELECT bno, title, writer, regDate, viewCnt FROM board WHERE title LIKE ?";
+							String sql = "SELECT bno, title, writer, regDate, viewCnt FROM board WHERE title LIKE ? ORDER BY bno DESC LIMIT ?, ?";
 							pstmt = conn.prepareStatement(sql);
 							pstmt.setString(1, "%" + keyword + "%");
+							pstmt.setInt(2, startRow);
+							pstmt.setInt(3, pageSize);
 						}
 						rs = pstmt.executeQuery();
 
@@ -73,7 +84,7 @@
 							int bno = rs.getInt("bno");
 							String title = rs.getString("title");
 							String writer = rs.getString("writer");
-							String regDate = rs.getString("regDate");
+							Date regDate = rs.getDate("regDate");
 							int viewCnt = rs.getInt("viewCnt");
 					%>
 					<tr>
@@ -104,6 +115,72 @@
 				</tbody>
 			</table>
 		</div>
+        <div class="d-flex justify-content-center">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li class="page-item <% if(currentPage == 1) out.println("disabled"); %>">
+                        <a class="page-link" href="index.jsp?currentPage=1" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <% 
+                    int totalPages = 0; // 전체 페이지 개수
+                    int totalRecords = 0; // 전체 게시글 개수
+
+                    try {
+                        Class.forName(dbDriver);
+                        conn = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword);
+
+                        // 전체 게시글 개수 조회
+                        String countSql;
+                        if (keyword == null) {
+                            countSql = "SELECT COUNT(*) AS totalRecords FROM board";
+                            pstmt = conn.prepareStatement(countSql);
+                        } else {
+                            countSql = "SELECT COUNT(*) AS totalRecords FROM board WHERE title LIKE ?";
+                            pstmt = conn.prepareStatement(countSql);
+                            pstmt.setString(1, "%" + keyword + "%");
+                        }
+                        ResultSet rsCount = pstmt.executeQuery();
+                        if (rsCount.next()) {
+                            totalRecords = rsCount.getInt("totalRecords");
+                        }
+                        rsCount.close();
+
+                        // 전체 페이지 개수 계산
+                        totalPages = (int) Math.ceil((double) totalRecords / pageSize);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            if (pstmt != null) pstmt.close();
+                            if (conn != null) conn.close();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    for (int i = 1; i <= totalPages; i++) {
+                        if (i == currentPage) {
+                            // 현재 페이지 번호인 경우 active 클래스 추가
+                    %>
+                    <li class="page-item active"><a class="page-link" href="index.jsp?currentPage=<%=i%>"><%=i%></a></li>
+                    <%
+                        } else {
+                    %>
+                    <li class="page-item"><a class="page-link" href="index.jsp?currentPage=<%=i%>"><%=i%></a></li>
+                    <%
+                        }
+                    }
+                    %>
+                    <li class="page-item <% if(currentPage == totalPages) out.println("disabled"); %>">
+                        <a class="page-link" href="index.jsp?currentPage=<%=totalPages%>" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     <div class="d-flex justify-content-end">
         <button type="button" class="btn btn-secondary" onclick="checkLogin()">글 작성</button>
         
