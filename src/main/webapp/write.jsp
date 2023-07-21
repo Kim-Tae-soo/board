@@ -5,97 +5,35 @@
 <html>
 <head>
 <title>글 작성</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-    }
 
-    h1 {
-        text-align: center;
-    }
-
-    form {
-        width: 400px;
-        margin: 0 auto;
-    }
-
-    label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-
-    input[type="text"],
-    textarea {
-        width: 100%;
-        padding: 5px;
-        font-size: 14px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-bottom: 10px;
-    }
-
-    textarea {
-        resize: vertical;
-        height: 150px;
-    }
-
-    input[type="submit"] {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #ccc;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    input[type="submit"]:hover {
-        background-color: #999;
-    }
-
-    .back-btn {
-    
-        text-align: center;
-        margin-top: 20px;
-    }
-
-    .back-btn input[type="submit"] {
-        padding: 10px 20px;
-        font-size: 16px;
-        background-color: #ccc;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .back-btn input[type="submit"]:hover {
-        background-color: #999;
-    }
-</style>
+<!-- 루트 폴더에 부트스트랩을 참조하는 링크 -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
-    <h1>글 작성</h1>
-    <form action="save.jsp" method="post" enctype="multipart/form-data" onsubmit="return confirm('게시글을 저장하시겠습니까?')">
+<jsp:include page="nav.jsp"/>
+<nav class="navbar navbar-light bg-light">
+  <span class="navbar-brand" style="margin-left : 20px"><h3>게시글 작성</h3></span>
+</nav>
+    
+    <div style="margin: 50px; margin-top : 30px" >
+    
+    <form action="save.jsp" method="post" enctype="multipart/form-data">
         <label for="title">제목:</label>
-        <input type="text" name="title" id="title" />
-
+        <input class="form-control" type="text" name="title" id="title" required/>
+		<br>
         <label for="content">내용:</label>
-        <textarea name="content" id="content" rows="5" cols="50"></textarea>
-
+        <textarea class="form-control" name="content" id="content" rows="5" cols="50" required></textarea>
+		<br>
         <label for="file">파일 선택:</label>
-        <input type="file" name="file" id="file" />
-
-        <input type="submit" value="저장" />
+        <input class="form-control-file " type="file" name="file" id="file" />
+		<br>
+        <input class="btn btn-primary" type="submit" value="저장" />
     </form>
 
-    <div class="back-btn">
-        <form method="post" action="index.jsp">
-            <input type="submit" value="돌아가기">
-        </form>
-    </div>
+            <input class="btn btn-secondary" type="submit" value="돌아가기" >
+            </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 </html>
