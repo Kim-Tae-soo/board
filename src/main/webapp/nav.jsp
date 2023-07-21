@@ -28,18 +28,20 @@
 				// 로그인이 되어 있는 상태에서 보여주는 화면
 				}else{
 			%>
-			
-			  <li class="nav-item">
-        <a class="nav-link" href="logout.jsp">로그아웃</a>
-      </li>
+		
+		<li class="nav-item">
+        	<a class="nav-link" href="logout.jsp">로그아웃</a>
+      	</li>
+      
+     	<li class="nav-item">
+     		<a class="nav-link" href="mypage.jsp">내 글 목록</a>
+     	</li>
       
       <%
 				}
 			%>
       
-     
 			      
       </ul>
 			</div>
-      
 </nav>
