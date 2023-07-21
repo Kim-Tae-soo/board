@@ -157,7 +157,7 @@ body {
 
 			if (rowsAffected > 0) {
 	%>
-	<div class="message">글이 성공적으로 저장되었습니다.</div>
+	<div class="message"></div>
 	<%
 	} else {
 	%>

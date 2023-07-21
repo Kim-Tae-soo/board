@@ -79,7 +79,7 @@
 </head>
 <body>
     <h1>글 작성</h1>
-    <form action="save.jsp" method="post" enctype="multipart/form-data">
+    <form action="save.jsp" method="post" enctype="multipart/form-data" onsubmit="return confirm('게시글을 저장하시겠습니까?')">
         <label for="title">제목:</label>
         <input type="text" name="title" id="title" />
 
