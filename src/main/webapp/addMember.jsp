@@ -19,7 +19,7 @@
 		<div class="form-group row">
 			<label class="col-sm-2">아이디</label>
 			<div class="col-sm-3">
-            	<input type="text" id="id" class="form-group" placeholder="ID" required>
+            	<input type="text" id="id" name="userId" class="form-group" placeholder="ID" required>
              	<input type="button" value="ID중복확인" onclick="idCheck()"> 
          	</div>
 		</div>
@@ -89,7 +89,8 @@
 		</div>
 	</form>
 </div>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+<!-- <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> -->
 
 </body>
 <script>
