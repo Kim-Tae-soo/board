@@ -18,7 +18,6 @@
 
 </head>
 <body>
-	<h1>게시글 상세 내용</h1>
 	<%!// 서버 측에 로그인 상태를 확인하기 위한 메서드
 	private boolean isUserLoggedIn(HttpSession session) {
 		// 로그인한 사용자의 정보가 세션에 저장되어 있는지 확인
@@ -69,20 +68,20 @@
             String sessionId = (String) session.getAttribute("sessionId");
             String memberName = null;
             // 데이터베이스에서 member 테이블을 조회하여 회원의 이름 가져오기
-            String sqlMember = "SELECT name FROM member WHERE id = ?";
+            String sqlMember = "SELECT userid FROM board WHERE bno = ?";
             PreparedStatement pstmtMember = conn.prepareStatement(sqlMember);
-            pstmtMember.setString(1, sessionId);
+            pstmtMember.setInt(1, bno);
             ResultSet rsMember = pstmtMember.executeQuery();
             if (rsMember.next()) {
-                memberName = rsMember.getString("name");
+                memberName = rsMember.getString("userid");
             }
             rsMember.close();
             pstmtMember.close();
             
          	// 수정과 삭제 버튼 표시 여부를 결정하는 변수
-            boolean showEditButtons = isUserLoggedIn && writer.equals(memberName);
+            boolean showEditButtons = isUserLoggedIn && sessionId.equals(memberName);
 	%>
-	<div class="container">
+	<div class="container" style= "padding-top: 20px">
 		<div class="row">
 			<table class="table table-striped"
 				style="text-align: center; border: 1px solid #dddddd">
@@ -109,7 +108,7 @@
 					<tr style="wdith: 100%;">
 						<td>내용</td>
 						<td colspan="2"
-							style="min-height: 200px; word-break: break-all"><%=content%></td>
+							style="min-height: 200px; text-align: left; word-break: break-all"><%=content%></td>
 					</tr>
 					<tr>
 						<td>조회수</td>

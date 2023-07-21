@@ -125,11 +125,12 @@ body {
 	            pstmtMember.close();
 	        }
 	        
-			String sql = "INSERT INTO board (title, writer, content, file_name, file_path) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO board (title, writer, content, file_name, file_path, userid) VALUES (?, ?, ?, ?, ?, ?)";
 			pstmt = conn.prepareStatement(sql);
 
 			String title = "";
 			String content = "";
+			String userId = (String) session.getAttribute("sessionId");
 
 			for (FileItem fileItem : fileItems) {
 				if (fileItem.isFormField()) {
@@ -152,6 +153,7 @@ body {
 			pstmt.setString(3, content);
 			pstmt.setString(4, fileName);
 			pstmt.setString(5, filePath);
+			pstmt.setString(6, userId);
 
 			int rowsAffected = pstmt.executeUpdate();
 
