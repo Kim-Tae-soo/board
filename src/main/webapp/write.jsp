@@ -29,8 +29,9 @@
 		<br>
         <input class="btn btn-primary" type="submit" value="저장" />
     </form>
-
-            <input class="btn btn-secondary" type="submit" value="돌아가기" >
+            <form method="post" action="index.jsp">
+            <input class="btn btn-secondary" type="submit" value="돌아가기">
+        </form>
             </div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
