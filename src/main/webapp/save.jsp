@@ -187,8 +187,11 @@ body {
 	e.printStackTrace();
 	}
 	%>
-	<form method="post" action="index.jsp">
-		<input type="submit" value="돌아가기">
-	</form>
+    <script>
+        // INDEX 페이지로 바로 이동
+        setTimeout(function() {
+            window.location.href = 'index.jsp';
+        }, 1000); // 1초 후에 이동 (원하는 시간으로 변경 가능)
+    </script>
 </body>
 </html>

@@ -8,11 +8,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-<jsp:include page="menu.jsp"/>
+<jsp:include page="nav.jsp"/>
 <div class="jumbotron">
-	<div class="container">
-    	<h1 class="display-3">회원가입</h1>
-    </div>
+	<div style="text-align :center;" class="container">
+		<h1 >회원가입</h1>
+	</div>
 </div>
 <div class="container">
 	<form action="processAddMember.jsp" method="post">
