@@ -95,9 +95,7 @@ input[type="submit"]:hover {
 		<div style="text-align: center;">
 			<input type="hidden" name="bno" value="<%=bno%>"> <label
 				for="title">제목:</label> <input type="text" id="title" name="title"
-				value="<%=title%>"> <br> <label for="writer">작성자:</label>
-			<input type="text" id="writer" name="writer" value="<%=writer%>">
-			<br> <label for="content">내용:</label>
+				value="<%=title%>"> <br> <label for="content">내용:</label>
 			<textarea id="content" name="content" rows="5" cols="50"><%=content%></textarea>
 			<br> <input type="submit" value="수정하기">
 		</div>
